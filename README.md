@@ -45,15 +45,19 @@ When you execute code that write 2 variable to memory (1 is volatile, 1 is none-
 #### 3) Guarantee atomic access
 Reads and writes are atomic for _all_ variables declared `volatile` (from atomic docs)
 
-Example in `Singleton` design pattern, we use `volatile` keyword in `instance` variable because we want to guarantee that read before write finish.
+Example in `Singleton` design pattern, we use `volatile` keyword in `instance` variable because we want to guarantee that read after write finish.
 As the answer here https://stackoverflow.com/a/7855774/5381331, when object create it will allocate the memory then start constructing => without volatile, maybe in some situation a Thread can receive the `instance`  which is not finished constructing (I think some people called that is half-initialization)
 
 ### AtomicLong, AtomicBoolean
-volatile => guarantee visibility
+volatile => guarantee visibility.
 synchronized => guarantee visibility and blocking
 
-Currently I think `AtomicLong`, `AtomicBoolean` <=> synchronized
+Atomic variable wrap volatile variable. (for example you can check code inside AtomicInterger).
+volatile variable **only** gurantee set and get. Atomic variable have more methods support atomic
 
+Example: AtomicInterger have support some atomic function like ...
+getAndIncrement (<=> +1), getAndDecrement (<=> -1), …
+https://docs.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/atomic/AtomicInteger.html
 
 ### Reference
 
